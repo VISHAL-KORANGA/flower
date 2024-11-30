@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f8ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .flower-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stem {
+            position: absolute;
+            bottom: 0;
+            width: 5px;
+            height: 100px;
+            background-color: green;
+            animation: grow 4s ease-in-out infinite;
+            transform-origin: bottom;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 100px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid red;
+            transform: scale(0);
+            animation: bloom 4s ease-in-out infinite;
+        }
+
+        @keyframes grow {
+            0% {
+                transform: scaleY(0);
+            }
+
+            50% {
+                transform: scaleY(1);
+            }
+
+            100% {
+                transform: scaleY(0);
+            }
+        }
+
+        @keyframes bloom {
+
+            0%,
+            50% {
+                transform: scale(0);
+            }
+
+            60%,
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flower-container"></div>
+
+    <script>
+        function createFlower() {
+            const container = document.querySelector('.flower-container');
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+
+            const stem = document.createElement('div');
+            stem.className = 'stem';
+
+            const xPosition = Math.random() * window.innerWidth;
+
+            flower.style.left = `${xPosition}px`;
+            stem.style.left = `${xPosition}px`;
+
+            container.appendChild(stem);
+            container.appendChild(flower);
+
+            // Remove flowers after animation
+            setTimeout(() => {
+                stem.remove();
+                flower.remove();
+            }, 4000);
+        }
+
+        setInterval(createFlower, 1000);
+    </script>
+</body>
+
+</html>
